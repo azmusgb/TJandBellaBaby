@@ -12,386 +12,567 @@
   <meta property="og:description" content="Saturday, October 12 • 2–5 PM • Bellevue State Park (Hunter Barn Lawn). BBQ, live music, games, and a surprise gender reveal!" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#d4a574" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg-primary: linear-gradient(135deg, #faf8f5 0%, #f2ede6 50%, #ebe4db 100%);
-      --bg-glass: rgba(255, 255, 255, 0.86);
-      --bg-glass-hover: rgba(255, 255, 255, 0.95);
-      --ink:#2a2a2a;
-      --muted:#6b6b6b;
-      --muted-2:#888;
-      --gold:#d4a574;
-      --sage:#8FB3A3;
-      --rose:#e8a5a5;
-      --cream:#f7f3ee;
-      --grad-main: linear-gradient(135deg, #d4a574 0%, #c49660 100%);
-      --grad-reveal: linear-gradient(45deg, #ff9ac1 0%, #a8d0ff 50%, #ffffff 100%);
-      --shadow-soft: 0 10px 40px rgba(0,0,0,.08);
-      --shadow-strong: 0 20px 60px rgba(0,0,0,.15);
-      --shadow-glow: 0 0 30px rgba(212,165,116,.3);
-      --r-lg: 20px;
-      --ease: cubic-bezier(.4,0,.2,1);
+      --bg-1:#f8f6f3;
+      --bg-2:#ede7e0;
+      --ink:#2c2c2c;
+      --muted:#666;
+      --accent-1:#d4a574; /* warm gold */
+      --accent-2:#8FB3A3; /* soft sage */
+      --accent-3:#C8B5A0; /* light taupe */
+      --accent-pink:#FFB6C1;
+      --accent-blue:#A8D0FF;
+      --glass:rgba(255,255,255,.88);
+      --shadow:0 20px 60px rgba(0,0,0,.12);
+      --radius-lg:24px;
+      --radius-md:16px;
+      --transition: all 0.3s ease;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      line-height:1.7; color:var(--ink); background:var(--bg-primary);
-      overflow-x:hidden; position:relative;
+      margin:0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      line-height:1.6;
+      overflow-x:hidden;
+      color:var(--ink);
+      background:linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
     }
 
-    /* Loading */
-    .loading-overlay{
-      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-      background:var(--bg-primary); z-index:9999; opacity:1; transition:opacity .5s ease;
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
     }
-    .loading-spinner{
-      width:52px; height:52px; border:3px solid var(--cream); border-top:3px solid var(--gold);
-      border-radius:50%; animation:spin 1s linear infinite;
+
+    /* Floating confetti dots (ambient) */
+    .floating-confetti{
+      position:fixed; 
+      width:12px; height:12px; 
+      border-radius:50%;
+      pointer-events:none; 
+      z-index:1;
+      animation:float 6s ease-in-out infinite;
+      opacity:.9;
+    }
+    @keyframes float{
+      0%,100%{ transform: translateY(0) rotate(0deg); opacity:.7;}
+      50%{ transform: translateY(-22px) rotate(180deg); opacity:1;}
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      text-align:center; padding:2rem; position:relative;
+      background:linear-gradient(135deg, var(--bg-1) 0%, #efe9e2 50%, #f3eee7 100%);
+      isolation:isolate;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a574' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .surprise-badge{
+      background:linear-gradient(45deg, var(--accent-1), #c49660);
+      color:#fff; padding:.5rem 2rem; border-radius:50px;
+      font-size:.9rem; font-weight:700; letter-spacing:2px;
+      margin-bottom:2rem; box-shadow:0 4px 20px rgba(196,150,96,.35);
+      animation:pulse 2s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    .surprise-badge::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+      transform: rotate(30deg);
+      animation: shine 3s infinite;
+    }
+    @keyframes shine {
+      0% { left: -50%; }
+      100% { left: 150%; }
+    }
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+    .main-title{
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800; line-height:1.1; margin:0 0 1rem;
+      background: linear-gradient(135deg, #8B7355 0%, #A68B5B 50%, #8B7355 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .subtitle{
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color:#8B7355; margin:0 0 3rem; font-weight:300; letter-spacing:.5px;
+      position: relative;
+      display: inline-block;
+    }
+    .subtitle::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent-1), transparent);
+    }
+
+    .event-details{
+      background:var(--glass); backdrop-filter: blur(10px);
+      border-radius:var(--radius-lg);
+      padding:2.5rem; max-width:640px; width:100%;
+      box-shadow:var(--shadow); border:1px solid rgba(255,255,255,.28);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .event-details:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 70px rgba(0,0,0,.15);
+    }
+    .date-time{ font-size:1.5rem; font-weight:800; margin-bottom:.5rem;}
+    .location{ font-size:1.05rem; color:var(--muted); margin-bottom:0.25rem;}
+
+    .features-grid{
+      display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+      gap:2rem; margin:4rem auto; padding:0 2rem; max-width:1100px;
+    }
+    .feature-card{
+      background:rgba(255,255,255,.82); backdrop-filter: blur(5px);
+      padding:2rem; border-radius:var(--radius-md); text-align:center;
+      transition: transform .25s ease, box-shadow .25s ease;
+      border:1px solid rgba(255,255,255,.35);
+      position: relative;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--accent-1), var(--accent-2));
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .feature-card:hover{ 
+      transform:translateY(-8px); 
+      box-shadow:0 18px 40px rgba(0,0,0,.12);
+    }
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+    .feature-icon{ 
+      font-size:2.25rem; 
+      display:block; 
+      margin-bottom:.75rem;
+      transition: var(--transition);
+    }
+    .feature-card:hover .feature-icon {
+      transform: scale(1.2);
+    }
+    .feature-title{ font-size:1.15rem; font-weight:700; margin:.25rem 0 .5rem;}
+    .feature-desc{ color:var(--muted); font-size:.98rem;}
+
+    /* Neutral, balanced pre-reveal gradient (pink + blue + white) */
+    .gender-reveal{
+      position:relative; overflow:hidden; text-align:center;
+      padding:4rem 2rem; margin:4rem 0;
+      background: linear-gradient(60deg, var(--accent-blue) 0%, var(--accent-pink) 50%, #ffffff 100%);
+      color:#1d1d1d;
+    }
+    .gender-reveal::before{
+      content:""; position:absolute; inset:-50%;
+      background: radial-gradient(circle, rgba(255,255,255,.16) 0%, transparent 70%);
+      animation: spin 22s linear infinite; pointer-events:none;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* Particles */
-    .particle{
-      position:fixed; pointer-events:none; border-radius:50%;
-      animation:float-p 8s ease-in-out infinite; z-index:1; opacity:.9;
+    .reveal-title{ 
+      font-size:2.4rem; 
+      font-weight:900; 
+      margin:0 0 .5rem; 
+      position:relative; 
+      z-index:1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    @keyframes float-p{
-      0%,100%{ transform: translateY(0) rotate(0); opacity:.6}
-      25%{ transform: translateY(-30px) rotate(90deg) scale(1.05); opacity:.8}
-      50%{ transform: translateY(-10px) rotate(180deg) scale(.95); opacity:1}
-      75%{ transform: translateY(-25px) rotate(270deg) scale(1.02); opacity:.7}
-    }
+    .reveal-desc{ font-size:1.12rem; opacity:.92; margin:0 0 1.5rem; position:relative; z-index:1;}
 
-    /* Hero */
-    .hero{
-      min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-      text-align:center; padding:2rem; position:relative;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(212,165,116,.09) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(143,179,163,.09) 0%, transparent 50%),
-        var(--bg-primary);
-      isolation:isolate;
+    .vote-buttons{
+      display:flex; gap:1.25rem; justify-content:center; margin:1.5rem 0 0;
+      position:relative; z-index:1; flex-wrap:wrap;
     }
-    .surprise-badge{
-      background:var(--grad-main); color:#fff; padding:.8rem 2.5rem; border-radius:50px;
-      font-weight:800; font-size:.9rem; letter-spacing:3px; margin-bottom:2rem; box-shadow:var(--shadow-glow);
-      animation:pulse 3s var(--ease) infinite; position:relative; overflow:hidden;
-    }
-    .surprise-badge::before{
-      content:""; position:absolute; inset:-2px auto -2px -100%; width:100%;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
-      animation:shine 4s var(--ease) infinite;
-    }
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-    @keyframes shine{0%{left:-100%}50%,100%{left:100%}}
-
-    .main-title{
-      font-family:"Playfair Display", serif;
-      font-size: clamp(2.6rem, 8vw, 6rem); font-weight:900; line-height:1.1; margin:0 0 1.4rem;
-      background:linear-gradient(135deg, var(--gold) 0%, #b8956a 100%);
-      background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      animation:fade-up .9s var(--ease) .4s both;
-    }
-    .subtitle{
-      font-size: clamp(1.1rem, 3.4vw, 2rem); font-weight:300; color:var(--muted);
-      margin:0 0 3rem; letter-spacing:2px; animation:fade-up .9s var(--ease) .7s both;
-    }
-    @keyframes fade-up{from{opacity:0; transform:translateY(30px)}to{opacity:1; transform:translateY(0)}}
-
-    .event-details{
-      background:var(--bg-glass); backdrop-filter: blur(18px); border-radius:var(--r-lg);
-      padding:2.6rem; max-width:700px; width:100%; box-shadow:var(--shadow-strong);
-      border:1px solid rgba(255,255,255,.28); position:relative; overflow:hidden;
-      animation:card-in 1s var(--ease) 1s both;
-    }
-    .event-details::before{
-      content:""; position:absolute; inset:0; left:-100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
-      animation:card-shimmer 6s ease-in-out infinite;
-    }
-    @keyframes card-in{from{opacity:0; transform: translateY(40px) scale(.97)}to{opacity:1; transform:none}}
-    @keyframes card-shimmer{0%,90%,100%{left:-100%}45%{left:100%}}
-
-    .date-time{ font-family:"Playfair Display", serif; font-size:1.8rem; font-weight:700; margin-bottom:1rem; color:var(--gold);}
-    .location{ font-size:1.15rem; color:var(--muted); line-height:1.5;}
-    .location small{ font-size:.95rem; color:var(--muted-2); font-style:italic;}
-
-    /* Features */
-    .features-section{ padding:6rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.32) 100%); }
-    .features-grid{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-      gap:2.2rem; max-width:1200px; margin:0 auto;
-    }
-    .feature-card{
-      background:var(--bg-glass); backdrop-filter: blur(15px); padding:2.2rem; text-align:center;
-      border:1px solid rgba(255,255,255,.2); border-radius:var(--r-lg); box-shadow:var(--shadow-soft);
-      transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
-      position:relative; overflow:hidden; opacity:0; transform: translateY(24px);
-    }
-    .feature-card.in-view{ opacity:1; transform:none; transition-delay:.05s;}
-    .feature-card::before{
-      content:""; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
-      background: radial-gradient(circle, rgba(212,165,116,.05) 0%, transparent 70%); opacity:0; transition:opacity .35s ease;
-    }
-    .feature-card:hover{ transform:translateY(-10px) scale(1.015); box-shadow:var(--shadow-strong); background:var(--bg-glass-hover);}
-    .feature-card:hover::before{ opacity:1;}
-    .feature-icon{ font-size:2.8rem; display:block; margin-bottom:1rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,.1)); animation:icon-float 4s ease-in-out infinite;}
-    @keyframes icon-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .feature-title{ font-family:"Playfair Display", serif; font-size:1.35rem; font-weight:700; margin:.25rem 0 .6rem;}
-    .feature-desc{ color:var(--muted); font-size:1rem; }
-
-    /* Reveal */
-    .gender-reveal{
-      position:relative; text-align:center; padding:6rem 2rem; margin:4rem 0;
-      background: var(--grad-reveal); overflow:hidden; color:var(--ink);
-    }
-    .gender-reveal::before{
-      content:""; position:absolute; inset:-100%;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255,154,193,.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(168,208,255,.2) 0%, transparent 50%);
-      animation: swirl 20s linear infinite;
-    }
-    @keyframes swirl{to{transform:rotate(360deg)}}
-    .reveal-content{
-      position:relative; z-index:2; background: rgba(255,255,255,.12);
-      backdrop-filter: blur(10px); border-radius: var(--r-lg); padding:3rem;
-      max-width:820px; margin:0 auto; border:1px solid rgba(255,255,255,.22);
-    }
-    .reveal-title{ font-family:"Playfair Display", serif; font-size:3rem; font-weight:900; margin:0 0 1rem; text-shadow: 0 2px 10px rgba(0,0,0,.1); }
-    .reveal-desc{ font-size:1.25rem; margin:0 0 2rem; opacity:.92; }
-
-    .vote-buttons{ display:flex; gap:1.6rem; justify-content:center; flex-wrap:wrap; }
     .vote-btn{
-      background:rgba(255,255,255,.2); border:2px solid rgba(255,255,255,.5);
-      color:var(--ink); padding:1.2rem 2.2rem; border-radius:60px; font-weight:800; font-size:1.05rem;
-      cursor:pointer; backdrop-filter: blur(10px); transition: all .25s var(--ease); position:relative; overflow:hidden;
+      background:rgba(255,255,255,.2);
+      border:2px solid #fff; color:#1d1d1d;
+      padding:1rem 1.75rem; border-radius:50px; font-weight:800; font-size:1.05rem;
+      cursor:pointer; transition: transform .2s ease, background .2s ease, color .2s ease;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     }
-    .vote-btn::before{
-      content:""; position:absolute; top:50%; left:50%; width:0; height:0; border-radius:50%;
-      background: rgba(255,255,255,.3); transform: translate(-50%,-50%); transition: width .25s ease, height .25s ease;
+    .vote-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: var(--transition);
     }
-    .vote-btn:hover{ background:#fff; color:#ff6b9d; transform:scale(1.045); box-shadow:0 10px 30px rgba(0,0,0,.15); }
-    .vote-btn:hover::before{ width:320px; height:320px; }
-    .vote-btn:active{ transform:scale(.98); }
+    .vote-btn:hover::before {
+      left: 100%;
+    }
+    .vote-btn:hover{ background:#fff; color:#ff7fa1; transform:scale(1.045); }
+    .vote-note{ color:#222; opacity:.8; margin-top:.75rem; font-size:.98rem; }
 
-    .vote-note{ color:var(--ink); opacity:.8; margin-top:1rem; font-size:1rem; font-style:italic; }
-    #tally{ font-weight:700; margin-top:.4rem; }
-
-    /* CTA */
     .cta{
-      padding:6rem 2rem; text-align:center;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.8) 0%, rgba(247,243,238,.9) 100%),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="g" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23d4a574" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%238FB3A3" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23d4a574" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23g)"/></svg>');
+      padding:4rem 2rem; text-align:center;
+      background: rgba(255,255,255,.55);
+      position: relative;
     }
-    .cta h2{ font-family:"Playfair Display", serif; font-size:2.5rem; font-weight:700; margin:0 0 1.4rem; }
-    .cta p{ color:var(--muted); margin:0 0 2.6rem; font-size:1.15rem; }
-    .cta-buttons{ display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; margin-bottom:2.6rem; }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--accent-1), var(--accent-2), var(--accent-1));
+    }
+    .cta h2{ font-size:2rem; margin:0 0 1rem;}
+    .cta p{ color:var(--muted); margin:0 0 2rem; font-size:1.08rem;}
+    .cta-buttons{
+      display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+    }
     .cta-btn{
-      display:inline-flex; align-items:center; gap:.5rem; text-decoration:none; font-weight:800; font-size:1.05rem;
-      padding:1.05rem 2.2rem; border-radius:50px; transition: all .25s var(--ease); position:relative; overflow:hidden;
+      display:inline-flex; 
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration:none; 
+      font-weight:800;
+      background: linear-gradient(45deg, #8B7355, #A68B5B);
+      color:#fff; 
+      padding:1rem 1.75rem; 
+      border-radius:50px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow:0 4px 20px rgba(139,115,85,.3);
+      position: relative;
+      overflow: hidden;
     }
-    .cta-btn.primary{ background:var(--grad-main); color:#fff; box-shadow:var(--shadow-glow); }
-    .cta-btn.primary::before{
-      content:""; position:absolute; inset:0; left:-100%; background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transition:left .5s ease;
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(rgba(255,255,255,0.2), transparent);
+      opacity: 0;
+      transition: var(--transition);
     }
-    .cta-btn.primary:hover{ transform: translateY(-3px); box-shadow:0 15px 35px rgba(212,165,116,.4); }
-    .cta-btn.primary:hover::before{ left:100%;}
-    .cta-btn.secondary{ background:transparent; color:var(--gold); border:2px solid var(--gold); }
-    .cta-btn.secondary:hover{ background:var(--gold); color:#fff; transform:translateY(-3px); box-shadow:var(--shadow-soft); }
+    .cta-btn:hover::before {
+      opacity: 1;
+    }
+    .cta-btn:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(139,115,85,.38);}
+    .cta-btn.secondary{
+      background:transparent; color:#8B7355; border:2px solid #8B7355;
+      box-shadow:none;
+    }
+    .cta-btn.secondary:hover{ background:#8B7355; color:#fff; }
 
     .fun-note{
-      max-width:900px; margin:0 auto; padding:2.2rem; background:var(--bg-glass); backdrop-filter: blur(15px);
-      border-radius:var(--r-lg); border-left:5px solid var(--gold); font-style:italic; color:var(--muted); box-shadow:var(--shadow-soft);
+      margin:3rem auto 0; max-width:800px;
+      padding:1.5rem 1.75rem; background:rgba(255,255,255,.85);
+      border-radius:var(--radius-md); border-left:4px solid var(--accent-1);
+      font-style:italic; color:var(--muted);
+      position: relative;
     }
-    .fun-note strong{ color:var(--gold); }
+    .fun-note::before {
+      content: '"';
+      position: absolute;
+      top: -15px;
+      left: 15px;
+      font-size: 60px;
+      color: var(--accent-1);
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
 
-    /* Responsive */
+    .countdown {
+      margin: 2rem auto;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      max-width: 600px;
+    }
+    .countdown-item {
+      background: var(--glass);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      min-width: 80px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.28);
+    }
+    .countdown-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent-1);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .countdown-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: var(--bg-2);
+    }
+
     @media (max-width: 768px){
-      .hero{ padding:1.5rem; }
-      .event-details{ padding:2rem; margin:0 1rem;}
-      .features-grid{ gap:1.4rem; }
-      .feature-card{ padding:2rem; }
-      .vote-buttons{ flex-direction:column; gap:1rem; }
-      .vote-btn{ padding:1.05rem 1.8rem; }
-      .cta-buttons{ flex-direction:column; align-items:center; }
-      .fun-note{ padding:2rem; }
-    }
-    @media (max-width: 480px){
-      .reveal-title{ font-size: 2.2rem; }
-      .main-title{ font-size: 2.6rem; }
+      .event-details{ padding:1.75rem; margin:0 1rem;}
+      .location{ text-align:center; }
+      .vote-buttons{ flex-direction:column; gap:.75rem; }
+      .countdown {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .countdown-item {
+        flex: 1;
+        min-width: 70px;
+        padding: 0.75rem;
+      }
+      .countdown-number {
+        font-size: 1.5rem;
+      }
     }
 
-    /* Reduced motion */
+    /* Motion accessibility */
     @media (prefers-reduced-motion: reduce){
-      *,*::before,*::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        transition-duration:.01ms !important;
-      }
+      *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition:none !important; }
+      .floating-confetti { display: none; }
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
-  <noscript>
-    <div style="padding:1rem; text-align:center; background:#fff3cd; color:#856404;">
-      This page uses a little JavaScript for confetti and buttons. It’ll still look nice without it.
-    </div>
-  </noscript>
-
-  <!-- Loading overlay -->
-  <div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
-    <div class="loading-spinner" role="status" aria-label="Loading"></div>
-  </div>
-
-  <!-- A few seeded particles for instant polish -->
-  <div class="particle" style="top: 15%; left: 10%; width: 8px; height: 8px; background: var(--gold); animation-delay: 0s;"></div>
-  <div class="particle" style="top: 25%; left: 85%; width: 6px; height: 6px; background: var(--sage); animation-delay: 1s;"></div>
-  <div class="particle" style="top: 45%; left: 75%; width:10px; height:10px; background: var(--rose); animation-delay: 2s;"></div>
-  <div class="particle" style="top: 65%; left: 20%; width: 7px; height: 7px; background: var(--gold); animation-delay: 3s;"></div>
-  <div class="particle" style="top: 80%; left: 60%; width: 9px; height: 9px; background: var(--sage); animation-delay: 4s;"></div>
-  <div class="particle" style="top: 35%; left: 15%; width: 5px; height: 5px; background: var(--rose); animation-delay: 5s;"></div>
+  <!-- Ambient floating confetti seeds -->
+  <div class="floating-confetti" style="top: 20%; left: 10%; background: var(--accent-1); animation-delay: 0s;"></div>
+  <div class="floating-confetti" style="top: 60%; left: 85%; background: var(--accent-2); animation-delay: 1s;"></div>
+  <div class="floating-confetti" style="top: 30%; left: 75%; background: var(--accent-3); animation-delay: 2s;"></div>
+  <div class="floating-confetti" style="top: 80%; left: 20%; background: var(--accent-1); animation-delay: 3s;"></div>
+  <div class="floating-confetti" style="top: 15%; left: 60%; background: var(--accent-2); animation-delay: 4s;"></div>
+  <div class="floating-confetti" style="top: 45%; left: 15%; background: var(--accent-3); animation-delay: 5s;"></div>
 
   <main>
-    <!-- Hero -->
     <section class="hero" aria-labelledby="title">
-      <div class="surprise-badge" aria-hidden="true">✨ SURPRISE! ✨</div>
+      <div class="surprise-badge" aria-hidden="true">SURPRISE!</div>
       <h1 id="title" class="main-title">BABY SHOWER<br />+ SECRET GENDER REVEAL</h1>
       <p class="subtitle" aria-label="For TJ and Bella">FOR TJ &amp; BELLA</p>
 
-      <div class="event-details" aria-describedby="when where">
-        <div id="when" class="date-time">📅 SATURDAY, OCTOBER 12 • 2–5 PM</div>
+      <div class="event-details fade-in" aria-describedby="when where">
+        <div id="when" class="date-time">SATURDAY, OCTOBER 12 • 2–5 PM</div>
         <div id="where" class="location">
-          📍 BELLEVUE STATE PARK — HUNTER BARN LAWN<br />
+          BELLEVUE STATE PARK — HUNTER BARN LAWN<br />
           <small>(parking at main lot)</small>
         </div>
       </div>
-    </section>
 
-    <!-- Features -->
-    <section class="features-section" aria-label="Event Features">
-      <div class="features-grid">
-        <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">🍖</span>
-          <h3 class="feature-title">Backyard Smokehouse</h3>
-          <p class="feature-desc">Delicious BBQ feast with veggie options for everyone to enjoy</p>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">🍹</span>
-          <h3 class="feature-title">Mocktail &amp; Lemonade Bar</h3>
-          <p class="feature-desc">Refreshing artisanal drinks and fresh lemonade to keep you cool</p>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">🎵</span>
-          <h3 class="feature-title">Live Acoustic Music</h3>
-          <p class="feature-desc">Beautiful live acoustic performances to set the perfect mood</p>
-        </article>
-
-        <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">🎲</span>
-          <h3 class="feature-title">Fun Games &amp; Activities</h3>
-          <p class="feature-desc">Lawn games, Baby Bingo, Old Wives' Tales scorecard &amp; more</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Gender Reveal -->
-    <section class="gender-reveal" aria-labelledby="vote-title">
-      <div class="reveal-content">
-        <h2 id="vote-title" class="reveal-title">🎉 GENDER VOTE RAFFLE</h2>
-        <p class="reveal-desc">Cast your vote and win prizes when the magical confetti flies!</p>
-
-        <div class="vote-buttons" role="group" aria-label="Gender vote">
-          <button class="vote-btn" aria-label="Vote: Boy" data-gender="boy">👶💙 IT’S A BOY!</button>
-          <button class="vote-btn" aria-label="Vote: Girl" data-gender="girl">👶💖 IT’S A GIRL!</button>
+      <div class="countdown fade-in">
+        <div class="countdown-item">
+          <div class="countdown-number" id="days">00</div>
+          <div class="countdown-label">Days</div>
         </div>
-
-        <p class="vote-note">One sealed vote per guest at the raffle table</p>
-        <p class="vote-note" id="tally" aria-live="polite"></p>
+        <div class="countdown-item">
+          <div class="countdown-number" id="hours">00</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="minutes">00</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number" id="seconds">00</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
       </div>
     </section>
 
-    <!-- CTA -->
+    <section class="features-grid" aria-label="Event Features">
+      <article class="feature-card fade-in">
+        <span class="feature-icon" aria-hidden="true">🍖</span>
+        <h3 class="feature-title">Backyard Smokehouse</h3>
+        <p class="feature-desc">Delicious BBQ + veggie feast for everyone</p>
+      </article>
+
+      <article class="feature-card fade-in">
+        <span class="feature-icon" aria-hidden="true">🍹</span>
+        <h3 class="feature-title">Mocktail &amp; Lemonade Bar</h3>
+        <p class="feature-desc">Refreshing drinks to keep you cool</p>
+      </article>
+
+      <article class="feature-card fade-in">
+        <span class="feature-icon" aria-hidden="true">🎵</span>
+        <h3 class="feature-title">Live Acoustic Set</h3>
+        <p class="feature-desc">Beautiful music to set the mood</p>
+      </article>
+
+      <article class="feature-card fade-in">
+        <span class="feature-icon" aria-hidden="true">🎲</span>
+        <h3 class="feature-title">Fun &amp; Games</h3>
+        <p class="feature-desc">Lawn games, Baby Bingo &amp; Old Wives' Tales scorecard</p>
+      </article>
+    </section>
+
+    <section class="gender-reveal" aria-labelledby="vote-title">
+      <h2 id="vote-title" class="reveal-title fade-in">GENDER VOTE RAFFLE</h2>
+      <p class="reveal-desc fade-in">Cast your vote to win prizes when the confetti flies!</p>
+
+      <div class="vote-buttons" role="group" aria-label="Gender vote">
+        <button class="vote-btn fade-in" aria-label="Vote: Boy" data-gender="boy">👶 IT'S A BOY!</button>
+        <button class="vote-btn fade-in" aria-label="Vote: Girl" data-gender="girl">👶 IT'S A GIRL!</button>
+      </div>
+
+      <p class="vote-note fade-in">One sealed vote per guest at the raffle table</p>
+      <p class="vote-note fade-in" id="tally" aria-live="polite" style="margin-top:.25rem;"></p>
+    </section>
+
     <section class="cta" aria-labelledby="cta-title">
-      <h2 id="cta-title">Ready to Celebrate? 🎊</h2>
-      <p>Join us for this magical day filled with love, laughter, and surprises!</p>
+      <h2 id="cta-title" class="fade-in">Ready to Celebrate?</h2>
+      <p class="fade-in">Join us for this special day!</p>
 
       <div class="cta-buttons">
-        <!-- Replace # with your real links -->
-        <a class="cta-btn primary" href="#" id="rsvpLink" rel="noopener">📝 RSVP NOW</a>
-        <a class="cta-btn secondary" href="#" id="registryLink" rel="noopener">🎁 VIEW REGISTRY</a>
+        <!-- TODO: replace # with your real RSVP link -->
+        <a class="cta-btn fade-in" href="#" id="rsvpLink" rel="noopener">
+          <span>RSVP NOW</span>
+        </a>
+        <!-- TODO: replace # with your real registry link -->
+        <a class="cta-btn secondary fade-in" href="#" id="registryLink" rel="noopener">
+          <span>VIEW REGISTRY</span>
+        </a>
       </div>
 
-      <div class="fun-note">
-        <strong>Special Note:</strong> Dear Moms &amp; Grandma T2, your detective skills are adorable—but tonight we’re keeping it spoiler-free! No belly analytics, no whispers, and just one sealed vote per guest at our raffle table. <strong>The confetti court will render the final verdict!</strong>
+      <div class="fun-note fade-in">
+        <strong>P.S.</strong> Moms &amp; Grandma T2, your detective badges are adorable—but tonight we're spoiler-free! No belly analytics, no whispers, one sealed vote per guest at the raffle table. <strong>Confetti court will render the verdict.</strong>
         <br /><br />
-        <strong>🌧️ Rain Plan:</strong> Bellevue Barn
+        <strong>Rain Plan:</strong> Bellevue Barn
       </div>
     </section>
   </main>
 
+  <footer class="fade-in">
+    Made with ❤️ for TJ, Bella, and Baby
+  </footer>
+
   <script>
-    // ---- helpers
-    const prefersReduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+    // -------- Utility: device + reduced motion
+    const isMobile = () => window.matchMedia("(max-width: 600px)").matches;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // ---- loading overlay
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const overlay = document.getElementById('loadingOverlay');
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.remove(), 500);
-      }, 800);
+    // -------- Scroll animations
+    function checkScroll() {
+      const elements = document.querySelectorAll('.fade-in');
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('load', checkScroll);
 
-      initParticles();
-      initVoting();
-      initLinks();
-      initScrollIn();
-    });
-
-    // ---- floating particles
-    function initParticles(){
-      if (prefersReduced()) return;
-      const colors = ['var(--gold)','var(--sage)','var(--rose)'];
-      function createParticle(){
-        const el = document.createElement('div');
-        el.className = 'particle';
-        el.style.top = (Math.random()*100) + '%';
-        el.style.left= (Math.random()*100) + '%';
-        const s = 4 + Math.random()*8;
-        el.style.width = el.style.height = s + 'px';
-        el.style.background = colors[(Math.random()*colors.length)|0];
-        el.style.animationDuration = (6 + Math.random()*4) + 's';
-        el.style.animationDelay = (Math.random()*2) + 's';
-        document.body.appendChild(el);
-        setTimeout(()=> el.remove(), 12000);
+    // -------- Countdown timer
+    function updateCountdown() {
+      const eventDate = new Date('October 12, 2024 14:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+      
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      } else {
+        document.querySelector('.countdown').innerHTML = '<div class="countdown-item"><div class="countdown-number">🎉</div><div class="countdown-label">Today\'s the day!</div></div>';
       }
-      for (let i=0;i<8;i++) setTimeout(createParticle, i*400);
-      setInterval(createParticle, 3000);
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // -------- Live tally (client-side only; resets per device)
+    const TALLY_KEY = "tb-gender-tally-v1";
+    const tallyEl = document.getElementById("tally");
+    function readTally(){
+      try{ return JSON.parse(localStorage.getItem(TALLY_KEY)) || {boy:0, girl:0}; }
+      catch{ return {boy:0, girl:0}; }
+    }
+    function writeTally(t){ localStorage.setItem(TALLY_KEY, JSON.stringify(t)); }
+    function renderTally(){
+      const t = readTally();
+      // Soft display; you can remove if you want truly "sealed"
+      tallyEl.textContent = `Votes on this device — Boy: ${t.boy} · Girl: ${t.girl}`;
     }
 
-    // ---- confetti burst for votes
+    // -------- Burst confetti on vote
     function burstConfettiFrom(el){
-      if (prefersReduced()) return;
+      if(prefersReduced) return;
+      const colors = ['#ff9a9e','#a8d0ff','#ffffff','#d4a574','#8FB3A3'];
       const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width/2;
-      const cy = rect.top  + rect.height/2;
-      const colors = ['#ff9ac1','#a8d0ff','#ffffff','#d4a574','#8FB3A3'];
-      const pieces = isMobile()? 14 : 26;
+      const base = {x: rect.left + rect.width/2, y: rect.top + rect.height/2};
+      const pieces = isMobile() ? 12 : 24;
 
-      for (let i=0;i<pieces;i++){
+      for(let i=0;i<pieces;i++){
         const d = document.createElement('div');
         d.style.position = 'fixed';
-        d.style.left = cx + 'px';
-        d.style.top  = cy + 'px';
+        d.style.left = base.x + 'px';
+        d.style.top  = base.y + 'px';
         const size = 6 + Math.random()*6;
         d.style.width = d.style.height = size + 'px';
         d.style.background = colors[(Math.random()*colors.length)|0];
@@ -405,112 +586,78 @@
         const x = Math.cos(angle)*velocity;
         const y = Math.sin(angle)*velocity;
 
-        d.animate(
-          [{ transform:'translate(0,0) scale(1)', opacity:1 },
-           { transform:`translate(${x}px, ${y}px) scale(0)`, opacity:0 }],
-          { duration: 1000, easing:'cubic-bezier(0.25,0.46,0.45,0.94)' }
+        d.animate([
+          { transform:'translate(0,0) scale(1)', opacity:1 },
+          { transform:`translate(${x}px, ${y}px) scale(0)`, opacity:0 }
+        ], { duration: 1000, easing:'cubic-bezier(0.25,0.46,0.45,0.94)' }
         ).onfinish = () => d.remove();
       }
     }
 
-    // ---- voting (local-only)
-    function initVoting(){
-      const TALLY_KEY = "tb-gender-tally-v2";
-      const tallyEl = document.getElementById('tally');
+    // -------- Ambient confetti trickle
+    function addFloatingConfetti(){
+      if(prefersReduced) return;
+      const colors = ['var(--accent-1)','var(--accent-2)','var(--accent-3)'];
+      const dot = document.createElement('div');
+      dot.className = 'floating-confetti';
+      dot.style.top = (Math.random()*100) + '%';
+      dot.style.left = (Math.random()*100) + '%';
+      const s = 6 + Math.random()*6;
+      dot.style.width = dot.style.height = s + 'px';
+      dot.style.background = colors[(Math.random()*colors.length)|0];
+      dot.style.animationDuration = (4 + Math.random()*4) + 's';
+      dot.style.animationDelay = (Math.random()*6) + 's';
+      document.body.appendChild(dot);
+      setTimeout(()=> dot.remove(), 8000);
+    }
+    setInterval(addFloatingConfetti, 3000);
 
-      function readTally(){
-        try{ return JSON.parse(localStorage.getItem(TALLY_KEY)) || {boy:0,girl:0}; }
-        catch{ return {boy:0,girl:0}; }
-      }
-      function writeTally(t){ try{ localStorage.setItem(TALLY_KEY, JSON.stringify(t)); }catch{} }
-      function renderTally(){
-        const t = readTally();
-        const total = t.boy + t.girl;
-        if(total>0){
-          const bp = Math.round(t.boy/total*100);
-          const gp = Math.round(t.girl/total*100);
-          tallyEl.textContent = `Current votes on this device — Boys: ${t.boy} (${bp}%) • Girls: ${t.girl} (${gp}%)`;
-        }else{
-          tallyEl.textContent = 'Be the first to cast your vote!';
-        }
-      }
+    // -------- Vote handlers
+    function handleVote(gender, btn){
+      // Subtle feedback
+      btn.style.background = '#fff';
+      btn.style.color = '#ff7fa1';
+      btn.style.transform = 'scale(1.055)';
+      setTimeout(()=>{ btn.style.transform=''; }, 200);
 
-      document.querySelectorAll('.vote-btn').forEach(btn=>{
-        btn.addEventListener('click', e=>{
-          const gender = btn.getAttribute('data-gender');
-          // button feedback
-          btn.style.background = '#fff';
-          btn.style.color = '#ff6b9d';
-          btn.style.transform = 'scale(1.045)';
-          setTimeout(()=>{ btn.style.transform=''; }, 220);
-          // confetti
-          burstConfettiFrom(btn);
-          // tally update
-          const t = readTally();
-          t[gender] = (t[gender]||0) + 1;
-          writeTally(t);
-          renderTally();
-          // toast-y alert
-          const label = gender==='boy' ? "It’s a Boy!" : "It’s a Girl!";
-          setTimeout(()=> alert(`Your vote for “${label}” has been recorded. 🎉`), 340);
-        });
-      });
+      // Confetti
+      burstConfettiFrom(btn);
 
+      // Tally (local)
+      const t = readTally();
+      t[gender] = (t[gender]||0) + 1;
+      writeTally(t);
       renderTally();
+
+      // Gentle confirmation
+      const label = gender === 'boy' ? "It's a Boy!" : "It's a Girl!";
+      setTimeout(()=> alert(`Your vote for "${label}" has been recorded. 🎉`), 350);
     }
 
-    // ---- external links guard
-    function initLinks(){
-      document.getElementById('rsvpLink').addEventListener('click', (e)=>{
-        if(e.currentTarget.getAttribute('href') === '#'){
-          e.preventDefault();
-          alert('Replace the RSVP NOW button’s href with your Google Form/Eventbrite URL.');
-        }
+    document.querySelectorAll('.vote-btn').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        const gender = btn.getAttribute('data-gender');
+        handleVote(gender, btn);
       });
-      document.getElementById('registryLink').addEventListener('click', (e)=>{
-        if(e.currentTarget.getAttribute('href') === '#'){
-          e.preventDefault();
-          alert('Replace the VIEW REGISTRY button’s href with your live registry link.');
-        }
-      });
-    }
+    });
 
-    // ---- stagger in cards on scroll
-    function initScrollIn(){
-      const cards = document.querySelectorAll('.feature-card');
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            entry.target.classList.add('in-view');
-            io.unobserve(entry.target);
-          }
-        });
-      }, {rootMargin:'0px 0px -10% 0px', threshold:.1});
-      cards.forEach((c,i)=>{
-        c.style.transitionDelay = `${i*80}ms`;
-        io.observe(c);
-      });
-    }
-  </script>
+    // -------- Links (replace with real URLs)
+    document.getElementById('rsvpLink').addEventListener('click', (e)=>{
+      if(e.currentTarget.getAttribute('href') === '#'){
+        e.preventDefault();
+        alert('Connect your RSVP link (Google Forms, Eventbrite, etc.) by replacing the # in the RSVP NOW button.');
+      }
+    });
+    document.getElementById('registryLink').addEventListener('click', (e)=>{
+      if(e.currentTarget.getAttribute('href') === '#'){
+        e.preventDefault();
+        alert('Connect your Registry link (Amazon, Target, etc.) by replacing the # in the VIEW REGISTRY button.');
+      }
+    });
 
-  <!-- Schema.org Event (optional but nice for link previews/search) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Event",
-    "name":"Baby Shower + Secret Gender Reveal — TJ & Bella",
-    "startDate":"2025-10-12T14:00:00-04:00",
-    "endDate":"2025-10-12T17:00:00-04:00",
-    "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus":"https://schema.org/EventScheduled",
-    "location":{
-      "@type":"Place",
-      "name":"Bellevue State Park — Hunter Barn Lawn",
-      "address":"Bellevue State Park, DE (parking at main lot)"
-    },
-    "description":"BBQ + veggie feast, mocktail bar, live acoustic music, games, and a surprise gender reveal.",
-    "isAccessibleForFree": true
-  }
+    // Initial render
+    renderTally();
+    checkScroll();
   </script>
 </body>
 </html>
